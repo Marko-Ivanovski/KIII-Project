@@ -2,10 +2,8 @@ services:
   db:
     image: postgres:15
     restart: always
-    environment:
-      POSTGRES_DB: tasks
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
+    env_file:
+      - .env
     volumes:
       - db_data:/var/lib/postgresql/data
     ports:
@@ -16,12 +14,8 @@ services:
       context: ./backend
     depends_on:
       - db
-    environment:
-      DB_HOST: db
-      DB_PORT: 5432
-      DB_NAME: tasks
-      DB_USER: user
-      DB_PASS: pass
+    env_file:
+      - .env
     ports:
       - "8080:8080"
 
