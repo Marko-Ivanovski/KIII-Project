@@ -1,0 +1,50 @@
+# k8s/db-statefulset.yml
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kiii-db
+  namespace: kiii-project
+spec:
+  serviceName: db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kiii-db
+  template:
+    metadata:
+      labels:
+        app: kiii-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-db-credentials
+                  key: DB_NAME
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-db-credentials
+                  key: DB_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-db-credentials
+                  key: DB_PASS
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi

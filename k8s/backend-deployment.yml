@@ -1,0 +1,41 @@
+# k8s/backend-deployment.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kiii-backend
+  namespace: kiii-project
+  labels:
+    app: kiii-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: kiii-backend
+  template:
+    metadata:
+      labels:
+        app: kiii-backend
+    spec:
+      containers:
+        - name: backend
+          image: markoivanovsk1/task-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: kiii-app-config
+                  key: SPRING_DATASOURCE_URL
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-db-credentials
+                  key: DB_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: kiii-db-credentials
+                  key: DB_PASS

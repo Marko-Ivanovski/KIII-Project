@@ -1,0 +1,28 @@
+# k8s/ingress.yml
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kiii-project-ingress
+  namespace: kiii-project
+  annotations:
+    ingressClassName: nginx
+spec:
+  ingressClassName: nginx
+
+  defaultBackend:
+    service:
+      name: kiii-frontend-service
+      port:
+        number: 80
+
+  rules:
+    - http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: kiii-backend-service
+                port:
+                  number: 8080

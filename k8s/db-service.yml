@@ -1,0 +1,14 @@
+# k8s/db-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: kiii-project
+spec:
+  clusterIP: None
+  selector:
+    app: kiii-db
+  ports:
+    - port: 5432
+      targetPort: 5432

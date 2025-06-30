@@ -1,0 +1,14 @@
+# k8s/frontend-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: kiii-frontend-service
+  namespace: kiii-project
+spec:
+  selector:
+    app: kiii-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
