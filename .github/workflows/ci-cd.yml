@@ -82,14 +82,20 @@ jobs:
         run: |
           docker build \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/task-backend:${{ github.sha }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/task-backend:latest \
             -f backend/Dockerfile \
             backend
+          # push both tags
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-backend:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-backend:latest
 
       - name: Build & push frontend image
         run: |
           docker build \
             -t ${{ secrets.DOCKERHUB_USERNAME }}/task-frontend:${{ github.sha }} \
+            -t ${{ secrets.DOCKERHUB_USERNAME }}/task-frontend:latest \
             -f frontend/Dockerfile \
             frontend
+          # push both tags
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-frontend:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/task-frontend:latest
