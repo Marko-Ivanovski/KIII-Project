@@ -12,6 +12,27 @@ env:
 jobs:
   ci:
     runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:15
+        env:
+          POSTGRES_DB: tasks
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: pass
+        options: >-
+          --health-cmd "pg_isready -U user"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DB_HOST: db
+      DB_PORT: '5432'
+      DB_NAME: tasks
+      DB_USER: user
+      DB_PASS: pass
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
