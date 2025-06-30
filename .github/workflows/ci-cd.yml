@@ -43,13 +43,26 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Build & run tests
+      - name: Build & run backend tests
         working-directory: backend
         run: |
           mvn clean verify \
             -Dspring.datasource.url=jdbc:postgresql://$DB_HOST:$DB_PORT/$DB_NAME \
             -Dspring.datasource.username=$DB_USER \
             -Dspring.datasource.password=$DB_PASS
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build frontend for production
+        working-directory: frontend
+        run: npm run build
 
   docker:
     needs: build-and-test
