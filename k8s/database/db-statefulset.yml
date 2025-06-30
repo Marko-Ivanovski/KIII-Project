@@ -1,4 +1,4 @@
-# k8s/db-statefulset.yml
+# k8s/database/db-statefulset.yml
 
 apiVersion: apps/v1
 kind: StatefulSet

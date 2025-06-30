@@ -1,4 +1,4 @@
-# k8s/backend-service.yml
+# k8s/backend/backend-service.yml
 
 apiVersion: v1
 kind: Service

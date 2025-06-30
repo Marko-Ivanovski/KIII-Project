@@ -1,4 +1,4 @@
-# k8s/db-service.yml
+# k8s/database/db-service.yml
 
 apiVersion: v1
 kind: Service

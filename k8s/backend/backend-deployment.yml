@@ -1,4 +1,4 @@
-# k8s/backend-deployment.yml
+# k8s/backend/backend-deployment.yml
 
 apiVersion: apps/v1
 kind: Deployment
