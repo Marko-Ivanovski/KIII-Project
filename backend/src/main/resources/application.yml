@@ -3,9 +3,10 @@ spring:
     name: backend
 
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:tasks}
-    username: ${DB_USER:user}
-    password: ${DB_PASS:pass}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DB_USER:user}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASS:pass}}
+
 
   jpa:
     hibernate:
